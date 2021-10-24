@@ -1,0 +1,14 @@
+{
+  "name": "product-list",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "git@github.com:salmashaan/product-list.git",
+  "author": "salmashaan <smalmashaan@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  }
+}
