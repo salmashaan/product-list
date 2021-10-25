@@ -11,7 +11,8 @@ app.get("/api/products", (req, res) => {
 
 app.post("/api/products", (req, res) => {
   products.push(req.body);
-  res.status(201).json(req.body);
+  res.status(201);
+  return res.json(req.body);
 });
 
 app.delete("/api/products/:productId", (req, res) => {
@@ -21,7 +22,7 @@ app.delete("/api/products/:productId", (req, res) => {
   if (foundProduct) {
     products = products.filter((product) => product.id !== +foundProduct.id);
 
-    res.json(products);
+    return res.status(204).end();
   } else {
     res.status(404).json({ message: "Product not found" });
   }
