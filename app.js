@@ -10,8 +10,8 @@ app.get("/api/products", (req, res) => {
 });
 
 app.post("/api/products", (req, res) => {
-  const newProduct = products.push(req.body);
-  res.status(201).json(newProduct);
+  products.push(req.body);
+  res.status(201).json(req.body);
 });
 
 app.delete("/api/products/:productId", (req, res) => {
