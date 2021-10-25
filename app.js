@@ -1,5 +1,5 @@
 const express = require("express");
-const products = require("./data");
+let products = require("./data");
 
 const app = express();
 
@@ -12,17 +12,18 @@ app.get("/api/products", (req, res) => {
 app.post("/api/products", (req, res) => {
   const newProduct = products.push(req.body);
   res.status(201).json(newProduct);
-  console.log("POSTing", req.body);
 });
 
 app.delete("/api/products/:productId", (req, res) => {
   const { productId } = req.params;
-  const foundProduct = products.find(productId);
+  const foundProduct = products.find((product) => product.id === +productId);
+
   if (foundProduct) {
-    products.filter(foundCake);
-    res.status(204).end();
+    products = products.filter((product) => product.id !== +foundProduct.id);
+
+    res.json(products);
   } else {
-    res.status(404).json({ message: "Cake not found" });
+    res.status(404).json({ message: "Product not found" });
   }
 });
 
