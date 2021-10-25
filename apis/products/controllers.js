@@ -1,7 +1,7 @@
-let products = require("../products");
+let products = require("../../data");
 
 exports.productListFetch = (req, res) => {
-  res.json(products);
+  return res.json(products);
 };
 
 exports.productListCreate = (req, res) => {

@@ -2,15 +2,15 @@ const express = require("express");
 const {
   productListFetch,
   productListCreate,
-  ProductListDelete,
+  productListDelete,
 } = require("./controllers");
 
 const router = express.Router();
 
-router.get("/api/products", productListFetch);
+router.get("/", productListFetch);
 
-router.post("/api/products", productListCreate);
+router.post("/", productListCreate);
 
-router.delete("/api/products/:productId", ProductListDelete);
+router.delete("/:productId", productListDelete);
 
 module.exports = router;
