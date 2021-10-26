@@ -36,3 +36,19 @@ exports.productListDelete = async (req, res) => {
     return res.status(500).json({ message: "error" });
   }
 };
+
+exports.productListUpdate = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    foundProduct = await Product.findById(productId, req.body);
+
+    if (foundProduct) {
+      const updateProduct = await Product.findOneAndUpdate(foundProduct);
+      return res.status(204).json(updateProduct);
+    } else {
+      return res.status(404).json({ message: "This product doesn't exist" });
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "error" });
+  }
+};
