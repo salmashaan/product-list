@@ -5,7 +5,9 @@ const connectDB = require("./database");
 
 const app = express();
 
+// Middleware -> before all requests!
 app.use(express.json());
+
 app.use("/api/products", productRoutes);
 
 connectDB();

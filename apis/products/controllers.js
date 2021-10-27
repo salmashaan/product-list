@@ -45,11 +45,12 @@ exports.productListUpdate = async (req, res) => {
       req.body,
       {
         new: true,
+        runValidators: true,
       }
     );
 
     if (foundProduct) {
-      return res.status(204).json(foundProduct);
+      return res.status(200).json(foundProduct);
     } else {
       return res.status(404).json({ message: "This product doesn't exist" });
     }
@@ -57,3 +58,23 @@ exports.productListUpdate = async (req, res) => {
     return res.status(500).json({ message: "error" });
   }
 };
+
+// Make it a habit to put `return` before res.json --> good etiquette and caution
+
+// Either res.json or .end to terminate the function
+
+// Create
+// Status: 201
+// Content: Newly created item
+
+// Retrieve (Fetch List & Details)
+// Status: 200
+// Content: Requested Date
+
+// Update
+// Status: 200
+// Content: Updated items
+
+// Delete
+// Status: 204
+// Content: No content
