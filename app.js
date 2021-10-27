@@ -8,10 +8,19 @@ const app = express();
 // Middleware -> before all requests!
 app.use(express.json());
 
+app.use((req, res, next) => {
+  console.log(
+    `${req.method} ${req.protocol}://${req.hostname}:${PORT}${req.path}`
+  );
+  next();
+});
+
 app.use("/api/products", productRoutes);
 
 connectDB();
 
-app.listen(8000, () => {
-  console.log("The application is running on localhost:8000");
+const PORT = 8000;
+
+app.listen(PORT, () => {
+  console.log(`The application is running on localhost:${PORT}`);
 });
