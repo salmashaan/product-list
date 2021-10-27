@@ -22,8 +22,8 @@ exports.productListCreate = async (req, res) => {
 };
 
 exports.productListDelete = async (req, res) => {
+  const { productId } = req.params;
   try {
-    const { productId } = req.params;
     foundProduct = await Product.findById(productId);
 
     if (foundProduct) {
@@ -38,13 +38,18 @@ exports.productListDelete = async (req, res) => {
 };
 
 exports.productListUpdate = async (req, res) => {
+  const { productId } = req.params;
   try {
-    const { productId } = req.params;
-    foundProduct = await Product.findById(productId, req.body);
+    const foundProduct = await Product.findByIdAndUpdate(
+      { _id: productId },
+      req.body,
+      {
+        new: true,
+      }
+    );
 
     if (foundProduct) {
-      const updateProduct = await Product.findOneAndUpdate(foundProduct);
-      return res.status(204).json(updateProduct);
+      return res.status(204).json(foundProduct);
     } else {
       return res.status(404).json({ message: "This product doesn't exist" });
     }
