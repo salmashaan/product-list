@@ -10,9 +10,7 @@ app.use(express.json());
 
 // Logger Method Middleware
 app.use((req, res, next) => {
-  console.log(
-    `${req.method} ${req.protocol}://${req.hostname}:${PORT}${req.path}`
-  );
+  console.log(`${req.method} ${req.protocol}://${req.get("host")}${req.path}`);
   next();
 });
 
@@ -20,8 +18,7 @@ app.use("/api/products", productRoutes);
 
 // Not Found Middleware
 app.use((req, res, next) => {
-  if (req.path !== `${req.path}`) return;
-  res.status(404).json({ message: "Path Not Found" }), next();
+  res.status(404).json({ message: "Path Not Found" });
 });
 
 connectDB();
