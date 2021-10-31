@@ -2,6 +2,15 @@ let products = require("../../data");
 const Product = require("../../models/Product");
 const mongoose = require("mongoose");
 
+exports.fetchProduct = async (productId, next) => {
+  try {
+    const product = await Product.findById(productId);
+    return product;
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.productListFetch = async (req, res, next) => {
   try {
     const products = await Product.find();
@@ -22,38 +31,25 @@ exports.productListCreate = async (req, res, next) => {
 };
 
 exports.productListDelete = async (req, res, next) => {
-  const { productId } = req.params;
   try {
-    foundProduct = await Product.findByIdAndDelete({ _id: productId });
-
-    if (foundProduct) {
-      return res.status(204).end();
-    } else {
-      next({ status: 404, message: "This product doesn't exist" });
-    }
+    await req.product.remove();
+    res.status(204).end();
   } catch (error) {
     next(error);
   }
 };
 
 exports.productListUpdate = async (req, res, next) => {
-  const { productId } = req.params;
   try {
     const foundProduct = await Product.findByIdAndUpdate(
-      { _id: productId },
+      req.product,
       req.body,
       {
         new: true,
         runValidators: true,
       }
     );
-
-    if (foundProduct) {
-      return res.status(200).json(foundProduct);
-    } else {
-      //   return res.status(404).json({ message: "This product doesn't exist" });
-      next({ status: 404, message: "This product doesn't exist" });
-    }
+    return res.status(200).json(foundProduct);
   } catch (error) {
     next(error);
   }
